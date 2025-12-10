@@ -28,7 +28,6 @@ public class Anime {
         this.cantidadCapitulos = cantidadCapitulos;
     }
 
-aaaa
     /* GETTERS */
     public int getId() {
         return id;
