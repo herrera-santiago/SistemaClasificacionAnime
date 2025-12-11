@@ -30,7 +30,7 @@ public abstract class OrdenadorTemplateString implements CriterioOrdenamiento {
     }
 
     private int particionar(List<Anime> lista, int inicio, int fin, Ordenamientos orden) {
-        String pivot = obtenerValorString(lista.get(fin));
+        String pivot = obtenerValorString(lista.get(fin)); /* lista.get(fin) --> busca el ultimo anime*/
         int i = inicio - 1;
 
         for (int j = inicio; j < fin; j++) {
