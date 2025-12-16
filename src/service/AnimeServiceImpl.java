@@ -9,7 +9,7 @@ public class AnimeServiceImpl implements IAnimeService {
     List<Anime> animes = new ArrayList<>();
 
     @Override
-    public ValidacionException crearAnime(
+    public void crearAnime(
             String titulo,
             int anioLanzamiento,
             Estudios estudio,
@@ -18,10 +18,15 @@ public class AnimeServiceImpl implements IAnimeService {
             int calificacion,
             List<Generos> generos
     ) throws ValidacionException {
-        Anime nuevoAnime = new Anime(titulo, anioLanzamiento, estudio, estado, calificacion, generos, cantidadCapitulos);
+        Anime nuevoAnime = new Anime(titulo,
+                anioLanzamiento,
+                estudio,
+                estado,
+                calificacion,
+                generos,
+                cantidadCapitulos);
         animes.add(nuevoAnime);
         // llamar al repository aca para guardar el nuevo anime
-        return null;
     }
 
     @Override
@@ -31,8 +36,8 @@ public class AnimeServiceImpl implements IAnimeService {
     }
 
     @Override
-    public void ordenarAnimes(List<Anime> animes, CriterioOrdenamiento criterio, Ordenamientos orden) {
-        criterio.ordenar(this.animes, orden);
+    public List<Anime> ordenarAnimes(List<Anime> animes, CriterioOrdenamiento criterio, Ordenamientos orden) {
+        return criterio.ordenar(this.animes, orden);
     }
 
     @Override

@@ -6,7 +6,7 @@ import model.Ordenamientos;
 import java.util.List;
 
 public interface CriterioOrdenamiento {
-    public void ordenar(List<Anime> animes);
-    public void ordenar(List<Anime> animes, Ordenamientos orden);
+    public List<Anime> ordenar(List<Anime> animes);
+    public List<Anime> ordenar(List<Anime> animes, Ordenamientos orden);
 }
 
