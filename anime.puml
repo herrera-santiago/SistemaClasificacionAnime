@@ -36,6 +36,7 @@ package service {
     +ordenarAnimes(animes: List<Anime>, criterio: CriterioOrdenamiento): List<Anime>
     +filtrar(filtro: CriterioFiltrado): List<Anime>
     +obtenerPromedioCalificacionesGlobal(): double
+    +obtenerAnimesPorGenero(genero: Generos): List<Anime>
     +cantidadAnimesPorEstado(): Map<EstadoAnime, int>
     +obtenerPromedioCalificacionPorGenero(): Map<Generos, double>
     +top3GenerosMasFrecuentes(): List<Generos>
@@ -136,7 +137,7 @@ package service {
 
 package repository {
   interface IAnimeRepository {
-    +guardarAnime(anime: Anime): Anime
+    +guardarAnime(anime: Anime): void
     +obtenerAnimesPorTitulo(titulo: String): List<Anime>
     ' coincidencia parcial del titulo para obtener anime
     +obtenerAnimesPorRangoAños(añoDesde: int, añoHasta: int): List<Anime>

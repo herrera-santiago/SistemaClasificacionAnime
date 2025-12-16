@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IAnimeService {
 
-    public void crearAnime(
+    void crearAnime(
             String titulo,
             int anioLanzamiento,
             Estudios estudio,
@@ -25,4 +25,14 @@ public interface IAnimeService {
     );
 
     List<Anime> filtrar(CriterioFiltrado filtro);
+
+    Double obtenerPromedioCalificacionesGlobal();
+
+    List<Generos> top3GenerosMasFrecuentes();
+
+    List<Anime> recomendar(CriterioRecomendacion criterio, int n);
+
+    /* cantidadAnimesPorEstado(): Map<EstadoAnime, int>
+    obtenerPromedioCalificacionPorGenero(): Map<Generos, double> */
+
 }
