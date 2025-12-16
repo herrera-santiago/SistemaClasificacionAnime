@@ -1,39 +1,25 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lista {
-
-    private int id;
+public class Lista implements Serializable {
+     private int id;
     private String nombre;
-    private List<Integer> animesId;
+    private List<Integer> animesIds = new ArrayList<>();
 
-    public Lista(int id, String nombre) {
+    public Lista(int id, String nombre, List<Integer> animesIds) {
         this.id = id;
         this.nombre = nombre;
-        this.animesId = new ArrayList<>();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getNombre() {
-        return nombre;
+        this.animesIds = animesIds;
     }
 
     public boolean existeAnime(int idAnime) {
-        return animesId.contains(idAnime);
+        return this.animesIds.contains(idAnime);
     }
 
     public void agregarAnime(int idAnime) {
-        if (!animesId.contains(idAnime)) {
-            animesId.add(idAnime);
-        }
-    }
-
-    public void eliminarAnime(int idAnime) {
-        animesId.remove(Integer.valueOf(idAnime));
+        this.animesIds.add(idAnime);
     }
 }
