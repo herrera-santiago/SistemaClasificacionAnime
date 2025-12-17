@@ -12,16 +12,16 @@ public abstract class OrdenadorTemplate implements CriterioOrdenamiento {
     protected abstract int obtenerValor(Anime anime);
 
     @Override
-    public void ordenar(List<Anime> animes) {
-        ordenar(animes, Ordenamientos.DESC); // default
+    public List<Anime> ordenar(List<Anime> animes) {
+        return ordenar(animes, Ordenamientos.DESC); // default
     }
 
     @Override
-    public void ordenar(List<Anime> animes, Ordenamientos orden) {
-        quicksort(animes, 0, animes.size() - 1, orden);
+    public List<Anime> ordenar(List<Anime> animes, Ordenamientos orden) {
+        return quicksort(animes, 0, animes.size() - 1, orden);
     }
 
-    private void quicksort(List<Anime> lista, int inicio, int fin, Ordenamientos orden) {
+    private List<Anime> quicksort(List<Anime> lista, int inicio, int fin, Ordenamientos orden) {
         if (inicio < fin) {
             int pivotIndex;
             if (orden == Ordenamientos.ASC) {
@@ -32,6 +32,7 @@ public abstract class OrdenadorTemplate implements CriterioOrdenamiento {
             quicksort(lista, inicio, pivotIndex - 1, orden);
             quicksort(lista, pivotIndex + 1, fin, orden);
         }
+        return lista;
     }
 
     private int particionarAsc(List<Anime> lista, int inicio, int fin) {

@@ -13,12 +13,12 @@ public class OrdenarPorGenero extends OrdenadorTemplateString{
     }
 
     @Override
-    public void ordenar(List<Anime> animes) {
-        super.ordenar(animes);
+    public List<Anime> ordenar(List<Anime> animes) {
+        return super.ordenar(animes);
     }
 
     @Override
-    public void ordenar(List<Anime> animes, Ordenamientos orden) {
-        super.ordenar(animes, orden);
+    public List<Anime> ordenar(List<Anime> animes, Ordenamientos orden) {
+        return super.ordenar(animes, orden);
     }
 }

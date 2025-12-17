@@ -12,21 +12,22 @@ public abstract class OrdenadorTemplateString implements CriterioOrdenamiento {
     protected abstract String obtenerValorString(Anime anime);
 
     @Override
-    public void ordenar(List<Anime> animes) {
-        ordenar(animes, Ordenamientos.ASC); // default
+    public List<Anime> ordenar(List<Anime> animes) {
+        return ordenar(animes, Ordenamientos.ASC); // default
     }
 
     @Override
-    public void ordenar(List<Anime> animes, Ordenamientos orden) {
-        quicksort(animes, 0, animes.size() - 1, orden);
+    public List<Anime> ordenar(List<Anime> animes, Ordenamientos orden) {
+        return quicksort(animes, 0, animes.size() - 1, orden);
     }
 
-    private void quicksort(List<Anime> lista, int inicio, int fin, Ordenamientos orden) {
+    private List<Anime> quicksort(List<Anime> lista, int inicio, int fin, Ordenamientos orden) {
         if (inicio < fin) {
             int pivotIndex = particionar(lista, inicio, fin, orden);
             quicksort(lista, inicio, pivotIndex - 1, orden);
             quicksort(lista, pivotIndex + 1, fin, orden);
         }
+        return lista;
     }
 
     private int particionar(List<Anime> lista, int inicio, int fin, Ordenamientos orden) {

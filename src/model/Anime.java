@@ -1,9 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Anime {
+public class Anime implements Serializable {
     private int id;
     private final String titulo;
     private final int anioLanzamiento;
@@ -71,7 +72,7 @@ public class Anime {
         this.generos.remove(genero);
     }
 
-    protected void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
