@@ -24,6 +24,6 @@ public class FiltroPorCalificacionMinima extends FiltradorTemplate{
 
     @Override
     protected boolean cumpleCondicion(Anime anime) {
-        return anime.getCalificacionUsuarios() == calificacionMinima;
+        return anime.getCalificacionUsuarios() >= calificacionMinima;
     }
 }
