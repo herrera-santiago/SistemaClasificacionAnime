@@ -30,9 +30,9 @@ public interface IAnimeService {
 
     List<Generos> top3GenerosMasFrecuentes();
 
-    List<Anime> recomendar(CriterioRecomendacion criterio, int n);
+    /* List<Anime> recomendar(CriterioRecomendacion criterio, int n);
 
-    /* cantidadAnimesPorEstado(): Map<EstadoAnime, int>
+    cantidadAnimesPorEstado(): Map<EstadoAnime, int>
     obtenerPromedioCalificacionPorGenero(): Map<Generos, double> */
 
 }

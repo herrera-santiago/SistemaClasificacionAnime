@@ -91,9 +91,9 @@ public class AnimeServiceImpl implements IAnimeService {
         return top3;
     }
 
-    @Override
+    /*@Override
     public List<Anime> recomendar(CriterioRecomendacion criterio, int n) {
         return criterio.recomendar(n);
-    }
+    } */
 
 }
