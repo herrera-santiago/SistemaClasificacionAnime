@@ -115,7 +115,7 @@ public class AnimeRepositoryArchivo implements IAnimeRepository {
     private List<Anime> cargarDesdeArchivo() {
         File archivo = new File(ARCHIVO_ANIMES);
 
-        if (!archivo.exists()) {
+        if (!archivo.exists() || archivo.length() == 0) {
             return new ArrayList<>();
         }
 
