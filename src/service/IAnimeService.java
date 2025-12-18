@@ -30,6 +30,8 @@ public interface IAnimeService {
 
     List<Generos> top3GenerosMasFrecuentes();
 
+    void eliminarAnime(String titulo);
+
     /* List<Anime> recomendar(CriterioRecomendacion criterio, int n);
 
     cantidadAnimesPorEstado(): Map<EstadoAnime, int>
