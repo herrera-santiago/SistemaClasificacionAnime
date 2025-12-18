@@ -1,6 +1,7 @@
 package service;
 
 import model.*;
+import repository.AnimeNoEncontradoException;
 import repository.IAnimeRepository;
 
 import java.util.ArrayList;
@@ -94,6 +95,11 @@ public class AnimeServiceImpl implements IAnimeService {
     @Override
     public void eliminarAnime(String titulo) {
         this.animeRepository.eliminarAnime(titulo);
+    }
+
+    @Override
+    public void actualizarAnime(Anime anime) throws AnimeNoEncontradoException {
+        this.animeRepository.actualizarAnime(anime);
     }
 
     /*@Override

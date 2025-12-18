@@ -1,6 +1,7 @@
 package service;
 
 import model.*;
+import repository.AnimeNoEncontradoException;
 
 import java.util.List;
 
@@ -25,6 +26,8 @@ public interface IAnimeService {
     );
 
     List<Anime> filtrar(CriterioFiltrado filtro);
+
+    void actualizarAnime(Anime anime) throws AnimeNoEncontradoException;
 
     Double obtenerPromedioCalificacionesGlobal();
 
