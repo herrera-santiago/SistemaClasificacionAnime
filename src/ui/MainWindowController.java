@@ -145,4 +145,8 @@ public class MainWindowController {
     public void onListas() {
         mainWindow.mostrarInfo("Listas: pendiente.");
     }
+
+    public void onLimpiarFiltros(){
+        animeService.obtenerTodos();
+    }
 }
