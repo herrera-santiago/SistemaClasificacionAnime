@@ -15,8 +15,8 @@ import java.util.List;
 public class ListasDialog extends JDialog {
 
     private final IListaService listaService;
-    private final IAnimeService animeService; // por si querés mostrar info del anime, opcional
-    private final Anime animeSeleccionado;    // puede ser null
+    private final IAnimeService animeService;
+    private final Anime animeSeleccionado;
 
     private DefaultListModel<Lista> modelListas;
     private JList<Lista> listListas;
@@ -40,7 +40,7 @@ public class ListasDialog extends JDialog {
         listListas = new JList<>(modelListas);
         listListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // Renderer para que muestre solo el nombre (por si Lista no tiene toString)
+
         listListas.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
             JLabel lbl = new JLabel(value != null ? value.getNombre() : "");
             if (isSelected) {
@@ -61,7 +61,7 @@ public class ListasDialog extends JDialog {
         btnVerListasDelAnime.addActionListener(e -> verListasDelAnime());
         btnCerrar.addActionListener(e -> dispose());
 
-        // Si no hay anime seleccionado, no tiene sentido agregar/ver listas del anime
+
         btnAgregarAnime.setEnabled(animeSeleccionado != null);
         btnVerListasDelAnime.setEnabled(animeSeleccionado != null);
 

@@ -13,12 +13,12 @@ import ui.MainWindow;
 public class Main {
     public static void main(String[] args) {
 
-        IAnimeRepository repo = new AnimeRepositoryArchivo(); // o como se llame
+        IAnimeRepository repo = new AnimeRepositoryArchivo();
         IAnimeService animeService = new AnimeServiceImpl(repo);
 
 
         IListaRepository listaRepo = new ListaRepositoryArchivo();
-        IListaService listaService = new ListaServiceImpl(listaRepo); // por ahora si no está hecho
+        IListaService listaService = new ListaServiceImpl(listaRepo);
 
         SwingUtilities.invokeLater(() -> {
             MainWindow mainWindow = new MainWindow(animeService, listaService);

@@ -19,7 +19,7 @@ public class AnimeFormDialog extends JDialog {
     private JList<Generos> listGeneros;
     private JSpinner spinnerCalificacion;
 
-    private AnimeFormDTO resultado; // null = cancelado
+    private AnimeFormDTO resultado;
 
     public AnimeFormDialog(Frame owner) {
         super(owner, true);
@@ -66,7 +66,7 @@ public class AnimeFormDialog extends JDialog {
         panel.add(new JLabel("Calificación:"));
         panel.add(spinnerCalificacion);
 
-        // Botones abajo
+
         JButton btnAceptar = new JButton("Aceptar");
         JButton btnCancelar = new JButton("Cancelar");
 
@@ -98,7 +98,7 @@ public class AnimeFormDialog extends JDialog {
     public AnimeFormDTO mostrarParaCrear() {
         resultado = null;
 
-        // limpiar campos
+
         txtTitulo.setText("");
         txtAnio.setText("");
         txtCapitulos.setText("");
@@ -107,7 +107,7 @@ public class AnimeFormDialog extends JDialog {
         listGeneros.clearSelection();
         spinnerCalificacion.setValue(1);
 
-        setVisible(true); // acá se muestra el formulario
+        setVisible(true);
         return resultado;
     }
 
@@ -121,7 +121,7 @@ public class AnimeFormDialog extends JDialog {
         comboEstado.setSelectedItem(anime.getEstado());
         spinnerCalificacion.setValue(anime.getCalificacionUsuarios());
 
-        // géneros: selección múltiple
+
         List<Generos> gens = anime.getGeneros();
         int[] indices = gens.stream()
                 .mapToInt(g -> g.ordinal())
@@ -135,7 +135,7 @@ public class AnimeFormDialog extends JDialog {
     private AnimeFormDTO obtenerDTO() {
         List<Generos> generosSeleccionados = listGeneros.getSelectedValuesList();
 
-        // si no selecciona géneros, lo dejamos pasar y que valide el dominio/service
+
         return new AnimeFormDTO(
                 txtTitulo.getText(),
                 Integer.parseInt(txtAnio.getText()),

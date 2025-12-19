@@ -35,7 +35,7 @@ public class MainWindowController {
         try {
             AnimeFormDialog dialog = new AnimeFormDialog(mainWindow);
             AnimeFormDTO dto = dialog.mostrarParaCrear();
-            if (dto == null) return; // canceló
+            if (dto == null) return;
 
             animeService.crearAnime(
                     dto.titulo,
@@ -67,7 +67,7 @@ public class MainWindowController {
 
             AnimeFormDialog dialog = new AnimeFormDialog(mainWindow);
             AnimeFormDTO dto = dialog.mostrarParaEditar(seleccionado);
-            if (dto == null) return; // canceló
+            if (dto == null) return;
 
             Anime actualizado = new Anime(
                     dto.titulo,
@@ -80,7 +80,7 @@ public class MainWindowController {
             );
             actualizado.setId(seleccionado.getId());
 
-            // IMPORTANTE: esto compila solo si tu amigo ya agregó actualizarAnime(...)
+
             animeService.actualizarAnime(actualizado);
 
             mainWindow.refrescarTabla();
@@ -125,9 +125,9 @@ public class MainWindowController {
         try {
             FiltroAnimeDialog dialog = new FiltroAnimeDialog(mainWindow);
             FiltroDTO dto = dialog.mostrar();
-            if (dto == null) return; // canceló
+            if (dto == null) return;
 
-            // Si tu dialog no tiene opción "Todos (null)", genero/estado nunca van a ser null
+
             CriterioFiltrado criterio = null;
 
             if (dto.genero != null) {
@@ -245,7 +245,7 @@ public class MainWindowController {
 
     public void onListas() {
         try {
-            Anime seleccionado = mainWindow.getPanelLista().getAnimeSeleccionado(); // puede ser null
+            Anime seleccionado = mainWindow.getPanelLista().getAnimeSeleccionado();
             ListasDialog dialog = new ListasDialog(mainWindow, listaService, animeService, seleccionado);
             dialog.setVisible(true);
         } catch (Exception ex) {
