@@ -45,7 +45,7 @@ public class AnimeServiceImpl implements IAnimeService {
     }
 
     @Override
-    public List<Anime> ordenarAnimes(List<Anime> animes, CriterioOrdenamiento criterio, Ordenamientos orden) {
+    public List<Anime> ordenarAnimes(CriterioOrdenamiento criterio, Ordenamientos orden) {
         return criterio.ordenar(this.animeRepository.listarAnimes(), orden);
     }
 
@@ -59,9 +59,10 @@ public class AnimeServiceImpl implements IAnimeService {
         List<Anime> animes = this.animeRepository.listarAnimes();
         int sumaCalificacionesTotal = 0;
 
-        for (int i = 0; i <= animes.size() ; i++) {
+        for (int i = 0; i < animes.size(); i++) {
             sumaCalificacionesTotal += animes.get(i).getCalificacionUsuarios();
         }
+        if (animes.isEmpty()) return 0.0;
         return (double) (sumaCalificacionesTotal / animes.size());
     }
 
