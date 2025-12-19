@@ -12,7 +12,9 @@ public interface IListaService {
 
     void agregarAnimeALista(int idLista, int idAnime) throws NoEncontradoException, YaExisteException;
 
-    void eliminarAnimeDeLista(int idLista, int idAnime);
+    void eliminarAnimeDeLista(int idLista, int idAnime) throws NoEncontradoException;
+
+    void eliminarLista(String nombre);
 
     List<Lista> obtenerListasQueContienenAnime(int idAnime);
 
