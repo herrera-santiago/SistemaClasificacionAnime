@@ -4,6 +4,7 @@ import model.*;
 import repository.AnimeNoEncontradoException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IAnimeService {
 
@@ -34,6 +35,8 @@ public interface IAnimeService {
     List<Generos> top3GenerosMasFrecuentes();
 
     void eliminarAnime(String titulo);
+
+    Map<EstadosAnime, Integer> cantidadAnimesPorEstado();
 
     /* List<Anime> recomendar(CriterioRecomendacion criterio, int n);
 
