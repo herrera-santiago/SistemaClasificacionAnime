@@ -15,11 +15,11 @@ public interface IAnimeRepository {
 
     List<Anime> obtenerAnimesPorGenero(Generos genero);
 
-    Anime obtenerAnimePorId(int id) throws AnimeNoEncontradoException;
+    Anime obtenerAnimePorId(int id) throws NoEncontradoException;
 
     void eliminarAnime(String titulo);
 
-    void actualizarAnime(Anime anime) throws AnimeNoEncontradoException;
+    void actualizarAnime(Anime anime) throws NoEncontradoException;
 
     List<Anime> listarAnimes();
 

@@ -59,14 +59,14 @@ public class AnimeRepositoryArchivo implements IAnimeRepository {
     }
 
     @Override
-    public Anime obtenerAnimePorId(int id) throws AnimeNoEncontradoException {
+    public Anime obtenerAnimePorId(int id) throws NoEncontradoException {
         List<Anime> animes = cargarDesdeArchivo();
         for (Anime anime: animes){
             if (anime.getId() == id){
                 return anime;
             }
         }
-        throw new AnimeNoEncontradoException("Anime no encontrado.");
+        throw new NoEncontradoException("Anime no encontrado.");
     }
 
     @Override
@@ -77,7 +77,7 @@ public class AnimeRepositoryArchivo implements IAnimeRepository {
     }
 
     @Override
-    public void actualizarAnime(Anime animeActualizado) throws AnimeNoEncontradoException {
+    public void actualizarAnime(Anime animeActualizado) throws NoEncontradoException {
         List<Anime> animes = cargarDesdeArchivo();
         boolean actualizado = false;
         for (int i = 0; i < animes.size(); i++) {
@@ -89,7 +89,7 @@ public class AnimeRepositoryArchivo implements IAnimeRepository {
         }
 
         if (!actualizado) {
-            throw new AnimeNoEncontradoException("Anime no encontrado");
+            throw new NoEncontradoException("Anime no encontrado");
         }
         guardarEnArchivo(animes);
     }

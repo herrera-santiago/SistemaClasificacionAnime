@@ -1,5 +1,7 @@
 package model;
 
+import service.YaExisteException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +11,35 @@ public class Lista implements Serializable {
     private String nombre;
     private List<Integer> animesIds = new ArrayList<>();
 
-    public Lista(int id, String nombre, List<Integer> animesIds) {
-        this.id = id;
+    public Lista(String nombre, List<Integer> animesIds) {
         this.nombre = nombre;
+        this.animesIds = animesIds;
+    }
+
+    /* GETTERS */
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public List<Integer> getAnimesIds() {
+        return animesIds;
+    }
+
+    /* SETTERS */
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setAnimesIds(List<Integer> animesIds) {
         this.animesIds = animesIds;
     }
 
@@ -19,7 +47,10 @@ public class Lista implements Serializable {
         return this.animesIds.contains(idAnime);
     }
 
-    public void agregarAnime(int idAnime) {
-        this.animesIds.add(idAnime);
+    public void agregarAnime(int idAnime) throws YaExisteException {
+        if (!existeAnime(idAnime)) {
+            this.animesIds.add(idAnime);
+        }
+        throw new YaExisteException("Anime ya existe en la lista");
     }
 }
