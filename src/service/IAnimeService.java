@@ -21,7 +21,6 @@ public interface IAnimeService {
     List<Anime> obtenerTodos(); // la UI necesita ver animes
 
     List<Anime> ordenarAnimes(
-            List<Anime> animes,
             CriterioOrdenamiento criterio,
             Ordenamientos orden
     );
