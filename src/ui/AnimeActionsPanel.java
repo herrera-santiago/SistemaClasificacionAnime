@@ -28,9 +28,6 @@ public class AnimeActionsPanel extends JPanel {
         btnRecomendar = new JButton("Recomedar");
 
 
-
-
-
         setLayout(new FlowLayout(FlowLayout.RIGHT));
         add(btnNuevo);
         add(btnEditar);
@@ -54,7 +51,6 @@ public class AnimeActionsPanel extends JPanel {
         btnOrdenar.addActionListener(e -> controlador.onOrdenar());
         btnCantidadPorEstado.addActionListener(e -> controlador.onCantidadPorEstado());
         btnRecomendar.addActionListener(e -> controlador.onRecomendar());
-
 
     }
 }
