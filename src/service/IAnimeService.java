@@ -38,9 +38,7 @@ public interface IAnimeService {
 
     Map<EstadosAnime, Integer> cantidadAnimesPorEstado();
 
-    /* List<Anime> recomendar(CriterioRecomendacion criterio, int n);
+    List<Anime> recomendar(CriterioRecomendacion criterio, int n);
 
-    cantidadAnimesPorEstado(): Map<EstadoAnime, int>
-    obtenerPromedioCalificacionPorGenero(): Map<Generos, double> */
-
+    Map<Generos, Double> obtenerPromedioCalificacionPorGenero();
 }
