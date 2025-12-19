@@ -16,213 +16,321 @@ endlegend
 
 '----------- PAQUETES -------------'
 
+
+
 package ui {
-  class AnimeUI {
-    +mostrarMenu(): void
-    +mostrarAnimes(animes: List<Anime>): void
-    +crearAnime(): void
-    +filtrarPorGenero(): void
-    +filtrarPorEstado(): void
-    +filtrarPorCalificacion(): void
-    +crearLista(): void
-    +agregarAnimeALista(): void
-    +mostrarListas(): void
+
+  class MainWindow {
+    -animeService: IAnimeService
+    -listaService: IListaService
+    -panelLista: AnimeListPanel
+    -panelAcciones: AnimeActionsPanel
+    -controller: MainWindowController
+    +mostrar(): void
+    +refrescarTabla(): void
+    +mostrarError(msg: String): void
+    +mostrarInfo(msg: String): void
+    +getPanelLista(): AnimeListPanel
+  }
+
+  class MainWindowController {
+    -mainWindow: MainWindow
+    -animeService: IAnimeService
+    -listaService: IListaService
+    +onNuevoAnime(): void
+    +onEditarAnime(): void
+    +onEliminarAnime(): void
+    +onFiltrar(): void
+    +onLimpiarFiltros(): void
+    +onOrdenar(): void
+    +onCantidadPorEstado(): void
+    +onPromedioPorGenero(): void
+    +onRecomendar(): void
+    +onListas(): void
+  }
+
+  class AnimeListPanel {
+    -tabla: JTable
+    -modeloTabla: AnimeTableModel
+    +actualizarDatos(animes: List<Anime>): void
+    +getAnimeSeleccionado(): Anime
+  }
+
+  class AnimeTableModel {
+    -animes: List<Anime>
+    +setAnimes(animes: List<Anime>): void
+    +getAnimeAt(row: int): Anime
+  }
+
+  class AnimeActionsPanel {
+    +registrarListeners(controlador: MainWindowController): void
+  }
+
+  class AnimeFormDialog {
+    +mostrarParaCrear(): AnimeFormDTO
+    +mostrarParaEditar(anime: Anime): AnimeFormDTO
+  }
+
+  class AnimeFormDTO {
+    +titulo: String
+    +anio: int
+    +estudio: Estudios
+    +capitulos: int
+    +estado: EstadosAnime
+    +calificacion: int
+    +generos: List<Generos>
+  }
+
+  class FiltroAnimeDialog {
+    +mostrar(): FiltroDTO
+  }
+
+  class FiltroDTO {
+    +genero: Generos
+    +estado: EstadosAnime
+    +calificacionMinima: int
+  }
+
+  class OrdenarAnimeDialog {
+    +mostrar(): OrdenarDTO
+  }
+
+  class OrdenarDTO {
+    +campo: String
+    +orden: Ordenamientos
+  }
+
+  class RecomendarDialog {
+    +mostrar(): RecomendarDTO
+  }
+
+  class RecomendarDTO {
+    +tipo: String
+    +cantidad: int
+    +genero: Generos
+  }
+
+  class ListasDialog {
+    -listaService: IListaService
+    -animeService: IAnimeService
+    -animeSeleccionado: Anime
+  }
+
+  class MensajesUI {
+    +mostrarError(msg: String): void
+    +mostrarInfo(msg: String): void
+    +confirmar(msg: String): boolean
   }
 }
 
+
 package service {
-  interface IAnimeService {
-    +crearAnime(titulo: String, anioLanzamiento: int, estudio: Estudios,
-    cantidadCapitulos: int, estado: EstadosAnime,
-    calificacion: int, generos: List<Generos>): void
-    +obtenerTodos(): List<Anime>
-    +ordenarAnimes(criterio: CriterioOrdenamiento, orden: Ordenamientos): List<Anime>
-    +filtrar(filtro: CriterioFiltrado): List<Anime>
-    +actualizarAnime(anime: Anime): void
-    +eliminarAnime(titulo: String): void
-    +obtenerPromedioCalificacionesGlobal(): Double
-    +top3GenerosMasFrecuentes(): List<Generos>
-    +cantidadAnimesPorEstado(): Map<EstadosAnime, Integer>
-    +obtenerPromedioCalificacionPorGenero(): Map<Generos, Double>
-    +recomendar(criterio: CriterioRecomendacion, n: int): List<Anime>
-  }
+interface IAnimeService {
+  +crearAnime(titulo: String, anioLanzamiento: int, estudio: Estudios,
+  cantidadCapitulos: int, estado: EstadosAnime,
+  calificacion: int, generos: List<Generos>): void
+  +obtenerTodos(): List<Anime>
+  +ordenarAnimes(criterio: CriterioOrdenamiento, orden: Ordenamientos): List<Anime>
+  +filtrar(filtro: CriterioFiltrado): List<Anime>
+  +actualizarAnime(anime: Anime): void
+  +eliminarAnime(titulo: String): void
+  +obtenerPromedioCalificacionesGlobal(): Double
+  +top3GenerosMasFrecuentes(): List<Generos>
+  +cantidadAnimesPorEstado(): Map<EstadosAnime, Integer>
+  +obtenerPromedioCalificacionPorGenero(): Map<Generos, Double>
+  +recomendar(criterio: CriterioRecomendacion, n: int): List<Anime>
+}
 
-  interface IListaService {
-    +crearLista(nombre: String): void
-    +agregarAnimeALista(idLista: int, idAnime: int): void
-    +eliminarAnimeDeLista(idLista: int, idAnime: int): void
-    +eliminarLista(nombre: String): void
-    +obtenerListasQueContienenAnime(idAnime: int): List<Lista>
-    +listarListas(): List<Lista>
-  }
+interface IListaService {
+  +crearLista(nombre: String): void
+  +agregarAnimeALista(idLista: int, idAnime: int): void
+  +eliminarAnimeDeLista(idLista: int, idAnime: int): void
+  +eliminarLista(nombre: String): void
+  +obtenerListasQueContienenAnime(idAnime: int): List<Lista>
+  +listarListas(): List<Lista>
+}
 
-  interface CriterioOrdenamiento {
-    +ordenar(animes: List<Anime>): List<Anime>
-    +ordenar(animes: List<Anime>, orden: Ordenamientos): List<Anime>
-  }
+interface CriterioOrdenamiento {
+  +ordenar(animes: List<Anime>): List<Anime>
+  +ordenar(animes: List<Anime>, orden: Ordenamientos): List<Anime>
+}
 
-  interface CriterioFiltrado {
-    +filtrar(animes: List<Anime>): List<Anime>
-  }
+interface CriterioFiltrado {
+  +filtrar(animes: List<Anime>): List<Anime>
+}
 
-  interface CriterioRecomendacion {
-    +recomendar(animes: List<Anime>, n: int): List<Anime>
-  }
+interface CriterioRecomendacion {
+  +recomendar(animes: List<Anime>, n: int): List<Anime>
+}
 
-  class AnimeServiceImpl {
-    -animeRepository: IAnimeRepository
-  }
+class AnimeServiceImpl {
+  -animeRepository: IAnimeRepository
+}
 
-  class ListaServiceImpl {
-    -listaRepository: IListaRepository
-  }
+class ListaServiceImpl {
+  -listaRepository: IListaRepository
+}
 
-  abstract class OrdenadorTemplate {
-    #obtenerValor(anime: Anime): int
-    +ordenar(animes: List<Anime>): List<Anime>
-    +ordenar(animes: List<Anime>, orden: Ordenamientos): List<Anime>
-  }
+abstract class OrdenadorTemplate {
+  #obtenerValor(anime: Anime): int
+  +ordenar(animes: List<Anime>): List<Anime>
+  +ordenar(animes: List<Anime>, orden: Ordenamientos): List<Anime>
+}
 
-  abstract class OrdenadorTemplateString {
-    #obtenerValorString(anime: Anime): String
-    +ordenar(animes: List<Anime>): List<Anime>
-    +ordenar(animes: List<Anime>, orden: Ordenamientos): List<Anime>
-  }
+abstract class OrdenadorTemplateString {
+  #obtenerValorString(anime: Anime): String
+  +ordenar(animes: List<Anime>): List<Anime>
+  +ordenar(animes: List<Anime>, orden: Ordenamientos): List<Anime>
+}
 
-  class OrdenarPorCalificaciones
-  class OrdenarPorAnio
-  class OrdenarPorTitulo
-  class OrdenarPorGenero
+class OrdenarPorCalificaciones
+class OrdenarPorAnio
+class OrdenarPorTitulo
+class OrdenarPorGenero
 
-  abstract class FiltradorTemplate {
-    +filtrar(animes: List<Anime>): List<Anime>
-    #cumpleCondicion(anime: Anime): boolean
-  }
+abstract class FiltradorTemplate {
+  +filtrar(animes: List<Anime>): List<Anime>
+  #cumpleCondicion(anime: Anime): boolean
+}
 
-  class FiltroPorGenero {
-    -generoBuscado: Generos
-  }
+class FiltroPorGenero {
+  -generoBuscado: Generos
+}
 
-  class FiltroPorEstado {
-    -estadoBuscado: EstadosAnime
-  }
+class FiltroPorEstado {
+  -estadoBuscado: EstadosAnime
+}
 
-  class FiltroPorCalificacionMinima {
-    -calificacionMinima: int
-  }
+class FiltroPorCalificacionMinima {
+  -calificacionMinima: int
+}
 
 
-  class RecomendacionTopN
-  class RecomendacionPorGenero {
-    -genero: Generos
-  }
+class RecomendacionTopN
+class RecomendacionPorGenero {
+  -genero: Generos
+}
 
 }
 
 package repository {
 
-  interface IAnimeRepository {
-    +guardarAnime(anime: Anime): void
-    +obtenerAnimesPorTitulo(titulo: String): List<Anime>
-    +obtenerAnimesPorRangoAnios(anioDesde: int, anioHasta: int): List<Anime>
-    +obtenerAnimesPorGenero(genero: Generos): List<Anime>
-    +obtenerAnimePorId(id: int): Anime
-    +eliminarAnime(titulo: String): void
-    +actualizarAnime(anime: Anime): void
-    +listarAnimes(): List<Anime>
-  }
+interface IAnimeRepository {
+  +guardarAnime(anime: Anime): void
+  +obtenerAnimesPorTitulo(titulo: String): List<Anime>
+  +obtenerAnimesPorRangoAnios(anioDesde: int, anioHasta: int): List<Anime>
+  +obtenerAnimesPorGenero(genero: Generos): List<Anime>
+  +obtenerAnimePorId(id: int): Anime
+  +eliminarAnime(titulo: String): void
+  +actualizarAnime(anime: Anime): void
+  +listarAnimes(): List<Anime>
+}
 
-  class AnimeRepositoryArchivo {
-    -ARCHIVO_ANIMES: String
-    -guardarEnArchivo(animes: List<Anime>): void
-    -cargarDesdeArchivo(): List<Anime>
-  }
+class AnimeRepositoryArchivo {
+  -ARCHIVO_ANIMES: String
+  -guardarEnArchivo(animes: List<Anime>): void
+  -cargarDesdeArchivo(): List<Anime>
+}
 
-  interface IListaRepository {
-    +guardarLista(lista: Lista): Lista
-    +obtenerListaPorNombre(nombre: String): Lista
-    +obtenerListaPorId(idLista: int): Lista
-    +obtenerListasPorIdAnime(idAnime: int): List<Lista>
-    +listarListas(): List<Lista>
-    +actualizarLista(lista: Lista): void
-  }
+interface IListaRepository {
+  +guardarLista(lista: Lista): Lista
+  +obtenerListaPorNombre(nombre: String): Lista
+  +obtenerListaPorId(idLista: int): Lista
+  +obtenerListasPorIdAnime(idAnime: int): List<Lista>
+  +listarListas(): List<Lista>
+  +actualizarLista(lista: Lista): void
+}
 
-  class ListaRepositoryArchivo {
-    -ARCHIVO_LISTAS: String
-    -guardarEnArchivo(listas: List<Lista>): void
-    -cargarDesdeArchivo(): List<Lista>
-  }
+class ListaRepositoryArchivo {
+  -ARCHIVO_LISTAS: String
+  -guardarEnArchivo(listas: List<Lista>): void
+  -cargarDesdeArchivo(): List<Lista>
+}
 
-  class PersistenciaException
-  class NoEncontradoException
+class PersistenciaException
+class NoEncontradoException
 }
 
 
 package model {
-  class Anime {
-    -id: int
-    -titulo: String
-    -anioLanzamiento: int
-    -estudio: Estudios
-    -cantidadCapitulos: int
-    -estado: EstadoAnime
-    -calificacionUsuarios: int
-    -generos: List<Generos>
-    +Anime(titulo: String, anioLanzamiento: int, cantidadCapitulos: int, estado: EstadoAnime, calificacion: int, generos: List<Generos>): void
-    +validarTitulo(titulo: String): void
-    +validarAnio(anioLanzamiento: int): void
-    +validarCapitulos(cantidadCapitulos: int): void
-    +validarCalificacion(calificacionUsuarios: int): void
-    +validarGeneros(generos: List<Generos>): void
-    +setEstado(estado: EstadoAnime): void
-    +agregarGenero(genero: Generos): void
-    +eliminarGenero(genero: Generos): void
-    #setId(id: int): void
-    ' solo debe ser llamado por el repository quien es el que asigna el id
-  }
+class Anime {
+  -id: int
+  -titulo: String
+  -anioLanzamiento: int
+  -estudio: Estudios
+  -estado: EstadosAnime
+  -calificacionUsuarios: int
+  -generos: List<Generos>
+  -cantidadCapitulos: int
+  +Anime(titulo: String, anioLanzamiento: int, estudio: Estudios, estado: EstadosAnime,
+  calificacionUsuarios: int, generos: List<Generos>, cantidadCapitulos: int)
+  +getId(): int
+  +getTitulo(): String
+  +getAnioLanzamiento(): int
+  +getEstudio(): Estudios
+  +getEstado(): EstadosAnime
+  +getCalificacionUsuarios(): int
+  +getGeneros(): List<Generos>
+  +getCantidadCapitulos(): int
+  +agregarGenero(genero: Generos): void
+  +eliminarGenero(genero: Generos): void
+  +setId(id: int): void
+  +setEstado(estado: EstadosAnime): void
+  -validarTitulo(titulo: String): void
+  -validarAnio(anioLanzamiento: int): void
+  -validarCapitulos(cantidadCapitulos: int): void
+  -validarCalificacion(calificacionUsuarios: int): void
+  -validarGeneros(generos: List<Generos>): void
+}
 
-  class Lista {
-    -id: int
-    -nombre: String
-    -animesId: List<int>
-    +Lista(id: int, nombre: String): void
-    +existeAnime(idAnime: int): boolean
-    +agregarAnime(idAnime: int): void
-  }
+class Lista {
+  -id: int
+  -nombre: String
+  -animesIds: List<int>
+  +Lista(nombre: String, animesIds: List<int>)
+  +getId(): int
+  +getNombre(): String
+  +getAnimesIds(): List<int>
+  +setId(id: int): void
+  +setNombre(nombre: String): void
+  +setAnimesIds(animesIds: List<int>): void
+  +existeAnime(idAnime: int): boolean
+  +agregarAnime(idAnime: int): void
+}
 
 
-  enum Estudios {
-    Ufotable
-    MAPPA
-    Kyoto Animation
-    Bones
-    Wit Studio
-  }
+enum Estudios {
+  Ufotable
+  MAPPA
+  Kyoto Animation
+  Bones
+  Wit Studio
+}
 
-  enum EstadoAnime {
-    POR_VER
-    VIENDO
-    FINALIZADO
-    ABANDONADO
-  }
+enum EstadoAnime {
+  POR_VER
+  VIENDO
+  FINALIZADO
+  ABANDONADO
+}
 
-  enum Generos {
-    SHONEN
-    SHOJO
-    SEINEN
-    JOSEI
-    MECHA
-    ISEKAI
-    SLICE_OF_LIFE
-  }
+enum Generos {
+  SHONEN
+  SHOJO
+  SEINEN
+  JOSEI
+  MECHA
+  ISEKAI
+  SLICE_OF_LIFE
+}
 
-  enum Ordenamientos {
-    ASC
-    DESC
-  }
+enum Ordenamientos {
+  ASC
+  DESC
+}
 
-  class ValidacionException
-  class YaExisteException
+class ValidacionException
+class YaExisteException
 }
 
 '----------- RELACIONES -------------'
@@ -251,6 +359,31 @@ AnimeServiceImpl ..> IAnimeRepository
 ListaServiceImpl ..> IListaRepository
 IAnimeRepository <|.. AnimeRepositoryArchivo
 IListaRepository <|.. ListaRepositoryArchivo
+
+MainWindow *-- AnimeListPanel
+MainWindow *-- AnimeActionsPanel
+MainWindow *-- MainWindowController
+
+AnimeActionsPanel ..> MainWindowController
+MainWindowController ..> IAnimeService
+MainWindowController ..> IListaService
+
+MainWindowController ..> AnimeFormDialog
+MainWindowController ..> FiltroAnimeDialog
+MainWindowController ..> OrdenarAnimeDialog
+MainWindowController ..> RecomendarDialog
+MainWindowController ..> ListasDialog
+
+AnimeFormDialog --> AnimeFormDTO
+FiltroAnimeDialog --> FiltroDTO
+OrdenarAnimeDialog --> OrdenarDTO
+RecomendarDialog --> RecomendarDTO
+
+AnimeListPanel *-- AnimeTableModel
+AnimeTableModel --> Anime
+
+ListasDialog --> Lista
+ListasDialog --> Anime
 
 '---------- NOTAS -----------------'
 
