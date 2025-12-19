@@ -107,22 +107,40 @@ public class AnimeServiceImpl implements IAnimeService {
     @Override
     public Map<EstadosAnime, Integer> cantidadAnimesPorEstado() {
         Map<EstadosAnime, Integer> resultado = new HashMap<>();
-
         for (EstadosAnime estado : EstadosAnime.values()) {
             resultado.put(estado, 0);
         }
-
         for (Anime anime : animeRepository.listarAnimes()) {
             EstadosAnime estado = anime.getEstado();
             resultado.put(estado, resultado.get(estado) + 1);
         }
-
         return resultado;
     }
 
-    /*@Override
+    @Override
     public List<Anime> recomendar(CriterioRecomendacion criterio, int n) {
-        return criterio.recomendar(n);
-    } */
+        return criterio.recomendar(animeRepository.listarAnimes(), n);
+    }
 
+    @Override
+    public Map<Generos, Double> obtenerPromedioCalificacionPorGenero() {
+        List<Anime> animes = animeRepository.listarAnimes();
+        Map<Generos, Double> promedioPorGenero = new HashMap<>();
+       for (Generos genero : Generos.values()) {
+           int contador = 0;
+           int suma = 0;
+           for (Anime anime : animes) {
+               if (anime.getGeneros().contains(genero)) {
+                   contador += 1;
+                   suma += anime.getCalificacionUsuarios();
+               }
+           }
+           if (contador > 0) {
+               promedioPorGenero.put(genero, (double) suma / contador);
+           } else {
+               promedioPorGenero.put(genero, 0.0); // evitamos division por 0
+           }
+       }
+       return promedioPorGenero;
+    }
 }
