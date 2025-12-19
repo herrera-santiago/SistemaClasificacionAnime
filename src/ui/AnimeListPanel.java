@@ -31,4 +31,5 @@ public class AnimeListPanel extends JPanel {
         if (row == -1) return null;
         return modeloTabla.getAnimeAt(row);
     }
+
 }

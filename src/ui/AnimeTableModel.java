@@ -48,4 +48,5 @@ public class AnimeTableModel extends AbstractTableModel {
             default -> "";
         };
     }
+
 }
