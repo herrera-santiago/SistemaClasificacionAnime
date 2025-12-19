@@ -1,6 +1,7 @@
 package ui;
 
 import model.Anime;
+import model.Estudios;
 import model.EstadosAnime;
 import model.Generos;
 
@@ -13,14 +14,17 @@ public class AnimeFormDialog extends JDialog {
     private JTextField txtTitulo;
     private JTextField txtAnio;
     private JTextField txtCapitulos;
+    private JComboBox<Estudios> comboEstudio;
     private JComboBox<EstadosAnime> comboEstado;
     private JList<Generos> listGeneros;
     private JSpinner spinnerCalificacion;
 
+    private AnimeFormDTO resultado; // null = cancelado
+
     public AnimeFormDialog(Frame owner) {
         super(owner, true);
         setTitle("Formulario Animé");
-        setSize(400, 400);
+        setSize(420, 420);
         setLocationRelativeTo(owner);
 
         inicializarComponentes();
@@ -31,12 +35,16 @@ public class AnimeFormDialog extends JDialog {
         txtAnio = new JTextField();
         txtCapitulos = new JTextField();
 
+        comboEstudio = new JComboBox<>(Estudios.values());
         comboEstado = new JComboBox<>(EstadosAnime.values());
+
         listGeneros = new JList<>(Generos.values());
+        listGeneros.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         spinnerCalificacion = new JSpinner(new SpinnerNumberModel(1, 1, 5, 1));
 
-        JPanel panel = new JPanel(new GridLayout(0, 2));
+        JPanel panel = new JPanel(new GridLayout(0, 2, 8, 8));
+
         panel.add(new JLabel("Título:"));
         panel.add(txtTitulo);
 
@@ -45,6 +53,9 @@ public class AnimeFormDialog extends JDialog {
 
         panel.add(new JLabel("Capítulos:"));
         panel.add(txtCapitulos);
+
+        panel.add(new JLabel("Estudio:"));
+        panel.add(comboEstudio);
 
         panel.add(new JLabel("Estado:"));
         panel.add(comboEstado);
@@ -55,32 +66,80 @@ public class AnimeFormDialog extends JDialog {
         panel.add(new JLabel("Calificación:"));
         panel.add(spinnerCalificacion);
 
+        // Botones abajo
+        JButton btnAceptar = new JButton("Aceptar");
+        JButton btnCancelar = new JButton("Cancelar");
+
+        btnAceptar.addActionListener(e -> {
+            try {
+                resultado = obtenerDTO();
+                dispose();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Año y Capítulos deben ser números.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        btnCancelar.addActionListener(e -> {
+            resultado = null;
+            dispose();
+        });
+
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelBotones.add(btnCancelar);
+        panelBotones.add(btnAceptar);
+
+        setLayout(new BorderLayout(10, 10));
         add(panel, BorderLayout.CENTER);
+        add(panelBotones, BorderLayout.SOUTH);
     }
 
     public AnimeFormDTO mostrarParaCrear() {
-        int opcion = JOptionPane.showConfirmDialog(
-                this, "Confirmar", "Crear Animé",
-                JOptionPane.OK_CANCEL_OPTION
-        );
+        resultado = null;
 
-        if (opcion != JOptionPane.OK_OPTION)
-            return null;
+        // limpiar campos
+        txtTitulo.setText("");
+        txtAnio.setText("");
+        txtCapitulos.setText("");
+        comboEstudio.setSelectedIndex(0);
+        comboEstado.setSelectedIndex(0);
+        listGeneros.clearSelection();
+        spinnerCalificacion.setValue(1);
 
-        return obtenerDTO();
+        setVisible(true); // acá se muestra el formulario
+        return resultado;
     }
 
     public AnimeFormDTO mostrarParaEditar(Anime anime) {
-        // después lo completás con la carga de datos del anime
-        return mostrarParaCrear();
+        resultado = null;
+
+        txtTitulo.setText(anime.getTitulo());
+        txtAnio.setText(String.valueOf(anime.getAnioLanzamiento()));
+        txtCapitulos.setText(String.valueOf(anime.getCantidadCapitulos()));
+        comboEstudio.setSelectedItem(anime.getEstudio());
+        comboEstado.setSelectedItem(anime.getEstado());
+        spinnerCalificacion.setValue(anime.getCalificacionUsuarios());
+
+        // géneros: selección múltiple
+        List<Generos> gens = anime.getGeneros();
+        int[] indices = gens.stream()
+                .mapToInt(g -> g.ordinal())
+                .toArray();
+        listGeneros.setSelectedIndices(indices);
+
+        setVisible(true);
+        return resultado;
     }
 
     private AnimeFormDTO obtenerDTO() {
         List<Generos> generosSeleccionados = listGeneros.getSelectedValuesList();
 
+        // si no selecciona géneros, lo dejamos pasar y que valide el dominio/service
         return new AnimeFormDTO(
                 txtTitulo.getText(),
                 Integer.parseInt(txtAnio.getText()),
+                (Estudios) comboEstudio.getSelectedItem(),
                 Integer.parseInt(txtCapitulos.getText()),
                 (EstadosAnime) comboEstado.getSelectedItem(),
                 (int) spinnerCalificacion.getValue(),

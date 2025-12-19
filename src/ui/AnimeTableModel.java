@@ -9,12 +9,16 @@ import java.util.List;
 public class AnimeTableModel extends AbstractTableModel {
 
     private List<Anime> animes = new ArrayList<>();
-
     private final String[] columnas = {"Título", "Año", "Capítulos", "Estado", "Calificación"};
 
     public void setAnimes(List<Anime> animes) {
-        this.animes = animes;
+        this.animes = (animes != null) ? animes : new ArrayList<>();
         fireTableDataChanged();
+    }
+
+    public Anime getAnimeAt(int row) {
+        if (row < 0 || row >= animes.size()) return null;
+        return animes.get(row);
     }
 
     @Override
