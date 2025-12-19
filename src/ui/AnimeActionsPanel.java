@@ -11,6 +11,10 @@ public class AnimeActionsPanel extends JPanel {
     private JButton btnEliminar;
     private JButton btnFiltrar;
     private JButton btnListas;
+    private JButton btnOrdenar;
+    private JButton btnCantidadPorEstado;
+    private JButton btnRecomendar;
+
 
     public AnimeActionsPanel() {
         btnNuevo = new JButton("Nuevo");
@@ -19,6 +23,10 @@ public class AnimeActionsPanel extends JPanel {
         btnEliminar = new JButton("Eliminar");
         btnFiltrar = new JButton("Filtrar");
         btnListas = new JButton("Listas");
+        btnOrdenar = new JButton("Ordenar");
+        btnCantidadPorEstado = new JButton("Cantidad por estado");
+        btnRecomendar = new JButton("Recomedar");
+
 
         setLayout(new FlowLayout(FlowLayout.RIGHT));
         add(btnNuevo);
@@ -27,6 +35,10 @@ public class AnimeActionsPanel extends JPanel {
         add(btnEliminar);
         add(btnFiltrar);
         add(btnListas);
+        add(btnOrdenar);
+        add(btnCantidadPorEstado);
+        add(btnRecomendar);
+
     }
 
     public void registrarListeners(MainWindowController controlador) {
@@ -36,5 +48,9 @@ public class AnimeActionsPanel extends JPanel {
         btnEliminar.addActionListener(e -> controlador.onEliminarAnime());
         btnFiltrar.addActionListener(e -> controlador.onFiltrar());
         btnListas.addActionListener(e -> controlador.onListas());
+        btnOrdenar.addActionListener(e -> controlador.onOrdenar());
+        btnCantidadPorEstado.addActionListener(e -> controlador.onCantidadPorEstado());
+        btnRecomendar.addActionListener(e -> controlador.onRecomendar());
+
     }
 }

@@ -51,13 +51,10 @@ public class MainWindow extends JFrame {
         try {
             panelLista.actualizarDatos(animeService.obtenerTodos());
         } catch (Exception e) {
-            // Si falla la persistencia (archivo vacío/corrupto), mostramos tabla vacía y seguimos
             panelLista.actualizarDatos(java.util.Collections.emptyList());
             mostrarError("No se pudieron cargar los animés desde archivo. Se inicia vacío.\n" + e.getMessage());
         }
     }
-
-
 
     public void mostrarError(String msg) {
         JOptionPane.showMessageDialog(this, msg, "Error", JOptionPane.ERROR_MESSAGE);

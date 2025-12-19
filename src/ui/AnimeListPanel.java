@@ -25,10 +25,10 @@ public class AnimeListPanel extends JPanel {
         modeloTabla.setAnimes(animes);
     }
 
-    // Devuelve el Anime seleccionado o null si no hay selección
     public Anime getAnimeSeleccionado() {
         int row = tabla.getSelectedRow();
         if (row == -1) return null;
         return modeloTabla.getAnimeAt(row);
     }
+
 }

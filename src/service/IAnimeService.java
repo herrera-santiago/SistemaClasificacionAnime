@@ -1,9 +1,10 @@
 package service;
 
 import model.*;
-import repository.AnimeNoEncontradoException;
+import repository.NoEncontradoException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IAnimeService {
 
@@ -20,14 +21,13 @@ public interface IAnimeService {
     List<Anime> obtenerTodos(); // la UI necesita ver animes
 
     List<Anime> ordenarAnimes(
-            List<Anime> animes,
             CriterioOrdenamiento criterio,
             Ordenamientos orden
     );
 
     List<Anime> filtrar(CriterioFiltrado filtro);
 
-    void actualizarAnime(Anime anime) throws AnimeNoEncontradoException;
+    void actualizarAnime(Anime anime) throws NoEncontradoException;
 
     Double obtenerPromedioCalificacionesGlobal();
 
@@ -35,9 +35,9 @@ public interface IAnimeService {
 
     void eliminarAnime(String titulo);
 
-    /* List<Anime> recomendar(CriterioRecomendacion criterio, int n);
+    Map<EstadosAnime, Integer> cantidadAnimesPorEstado();
 
-    cantidadAnimesPorEstado(): Map<EstadoAnime, int>
-    obtenerPromedioCalificacionPorGenero(): Map<Generos, double> */
+    List<Anime> recomendar(CriterioRecomendacion criterio, int n);
 
+    Map<Generos, Double> obtenerPromedioCalificacionPorGenero();
 }

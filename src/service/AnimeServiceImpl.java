@@ -1,11 +1,13 @@
 package service;
 
 import model.*;
-import repository.AnimeNoEncontradoException;
 import repository.IAnimeRepository;
+import repository.NoEncontradoException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AnimeServiceImpl implements IAnimeService {
     private final IAnimeRepository animeRepository;
@@ -25,7 +27,7 @@ public class AnimeServiceImpl implements IAnimeService {
             List<Generos> generos
     ) throws ValidacionException {
         if (!animeRepository.obtenerAnimesPorTitulo(titulo).isEmpty()) {
-            throw new AnimeYaExisteException("Anime " + titulo + ", ya existe");
+            throw new YaExisteException("Anime " + titulo + ", ya existe");
         }
         Anime nuevoAnime = new Anime(titulo,
                 anioLanzamiento,
@@ -43,7 +45,7 @@ public class AnimeServiceImpl implements IAnimeService {
     }
 
     @Override
-    public List<Anime> ordenarAnimes(List<Anime> animes, CriterioOrdenamiento criterio, Ordenamientos orden) {
+    public List<Anime> ordenarAnimes(CriterioOrdenamiento criterio, Ordenamientos orden) {
         return criterio.ordenar(this.animeRepository.listarAnimes(), orden);
     }
 
@@ -57,9 +59,10 @@ public class AnimeServiceImpl implements IAnimeService {
         List<Anime> animes = this.animeRepository.listarAnimes();
         int sumaCalificacionesTotal = 0;
 
-        for (int i = 0; i <= animes.size() ; i++) {
+        for (int i = 0; i < animes.size(); i++) {
             sumaCalificacionesTotal += animes.get(i).getCalificacionUsuarios();
         }
+        if (animes.isEmpty()) return 0.0;
         return (double) (sumaCalificacionesTotal / animes.size());
     }
 
@@ -98,13 +101,47 @@ public class AnimeServiceImpl implements IAnimeService {
     }
 
     @Override
-    public void actualizarAnime(Anime anime) throws AnimeNoEncontradoException {
+    public void actualizarAnime(Anime anime) throws NoEncontradoException {
         this.animeRepository.actualizarAnime(anime);
     }
 
-    /*@Override
-    public List<Anime> recomendar(CriterioRecomendacion criterio, int n) {
-        return criterio.recomendar(n);
-    } */
+    @Override
+    public Map<EstadosAnime, Integer> cantidadAnimesPorEstado() {
+        Map<EstadosAnime, Integer> resultado = new HashMap<>();
+        for (EstadosAnime estado : EstadosAnime.values()) {
+            resultado.put(estado, 0);
+        }
+        for (Anime anime : animeRepository.listarAnimes()) {
+            EstadosAnime estado = anime.getEstado();
+            resultado.put(estado, resultado.get(estado) + 1);
+        }
+        return resultado;
+    }
 
+    @Override
+    public List<Anime> recomendar(CriterioRecomendacion criterio, int n) {
+        return criterio.recomendar(animeRepository.listarAnimes(), n);
+    }
+
+    @Override
+    public Map<Generos, Double> obtenerPromedioCalificacionPorGenero() {
+        List<Anime> animes = animeRepository.listarAnimes();
+        Map<Generos, Double> promedioPorGenero = new HashMap<>();
+       for (Generos genero : Generos.values()) {
+           int contador = 0;
+           int suma = 0;
+           for (Anime anime : animes) {
+               if (anime.getGeneros().contains(genero)) {
+                   contador += 1;
+                   suma += anime.getCalificacionUsuarios();
+               }
+           }
+           if (contador > 0) {
+               promedioPorGenero.put(genero, (double) suma / contador);
+           } else {
+               promedioPorGenero.put(genero, 0.0); // evitamos division por 0
+           }
+       }
+       return promedioPorGenero;
+    }
 }

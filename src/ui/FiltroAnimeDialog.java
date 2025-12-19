@@ -45,7 +45,7 @@ public class FiltroAnimeDialog extends JDialog {
         panel.add(new JLabel("Calificación mínima:"));
         panel.add(spinnerCalificacion);
 
-        // Habilitar/deshabilitar según tipo
+
         comboTipo.addActionListener(e -> actualizarHabilitados());
         actualizarHabilitados();
 
