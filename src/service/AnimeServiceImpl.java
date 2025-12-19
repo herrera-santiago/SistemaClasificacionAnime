@@ -5,7 +5,9 @@ import repository.AnimeNoEncontradoException;
 import repository.IAnimeRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AnimeServiceImpl implements IAnimeService {
     private final IAnimeRepository animeRepository;
@@ -100,6 +102,22 @@ public class AnimeServiceImpl implements IAnimeService {
     @Override
     public void actualizarAnime(Anime anime) throws AnimeNoEncontradoException {
         this.animeRepository.actualizarAnime(anime);
+    }
+
+    @Override
+    public Map<EstadosAnime, Integer> cantidadAnimesPorEstado() {
+        Map<EstadosAnime, Integer> resultado = new HashMap<>();
+
+        for (EstadosAnime estado : EstadosAnime.values()) {
+            resultado.put(estado, 0);
+        }
+
+        for (Anime anime : animeRepository.listarAnimes()) {
+            EstadosAnime estado = anime.getEstado();
+            resultado.put(estado, resultado.get(estado) + 1);
+        }
+
+        return resultado;
     }
 
     /*@Override
