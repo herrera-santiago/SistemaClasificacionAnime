@@ -1,8 +1,8 @@
 package service;
 
 import model.*;
-import repository.AnimeNoEncontradoException;
 import repository.IAnimeRepository;
+import repository.NoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class AnimeServiceImpl implements IAnimeService {
             List<Generos> generos
     ) throws ValidacionException {
         if (!animeRepository.obtenerAnimesPorTitulo(titulo).isEmpty()) {
-            throw new AnimeYaExisteException("Anime " + titulo + ", ya existe");
+            throw new YaExisteException("Anime " + titulo + ", ya existe");
         }
         Anime nuevoAnime = new Anime(titulo,
                 anioLanzamiento,
@@ -101,7 +101,7 @@ public class AnimeServiceImpl implements IAnimeService {
     }
 
     @Override
-    public void actualizarAnime(Anime anime) throws AnimeNoEncontradoException {
+    public void actualizarAnime(Anime anime) throws NoEncontradoException {
         this.animeRepository.actualizarAnime(anime);
     }
 
