@@ -2,9 +2,12 @@ import javax.swing.SwingUtilities;
 
 import repository.AnimeRepositoryArchivo;
 import repository.IAnimeRepository;
+import repository.IListaRepository;
+import repository.ListaRepositoryArchivo;
 import service.AnimeServiceImpl;
 import service.IAnimeService;
 import service.IListaService;
+import service.ListaServiceImpl;
 import ui.MainWindow;
 
 public class Main {
@@ -13,7 +16,9 @@ public class Main {
         IAnimeRepository repo = new AnimeRepositoryArchivo(); // o como se llame
         IAnimeService animeService = new AnimeServiceImpl(repo);
 
-        IListaService listaService = null; // por ahora si no está hecho
+
+        IListaRepository listaRepo = new ListaRepositoryArchivo();
+        IListaService listaService = new ListaServiceImpl(listaRepo); // por ahora si no está hecho
 
         SwingUtilities.invokeLater(() -> {
             MainWindow mainWindow = new MainWindow(animeService, listaService);

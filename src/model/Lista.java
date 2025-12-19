@@ -48,9 +48,10 @@ public class Lista implements Serializable {
     }
 
     public void agregarAnime(int idAnime) throws YaExisteException {
-        if (!existeAnime(idAnime)) {
-            this.animesIds.add(idAnime);
+        if (existeAnime(idAnime)) {
+            throw new YaExisteException("Anime ya existe en la lista");
         }
-        throw new YaExisteException("Anime ya existe en la lista");
+        this.animesIds.add(idAnime);
     }
+
 }
