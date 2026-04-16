@@ -17,8 +17,8 @@ public class FiltroAnimeDialog extends JDialog {
 
     public FiltroAnimeDialog(Frame owner) {
         super(owner, true);
-        setTitle("Filtrar Animés");
-        setSize(340, 260);
+        setTitle("🔎 Filtro Xeneize de Animés");
+        setSize(420, 300);
         setLocationRelativeTo(owner);
 
         inicializarComponentes();
@@ -31,7 +31,10 @@ public class FiltroAnimeDialog extends JDialog {
         comboEstado = new JComboBox<>(EstadosAnime.values());
         spinnerCalificacion = new JSpinner(new SpinnerNumberModel(1, 1, 5, 1));
 
-        JPanel panel = new JPanel(new GridLayout(0, 2, 8, 8));
+        JPanel panel = UiTheme.cardLayout(new GridLayout(0, 2, 10, 10));
+
+        panel.add(UiTheme.createCardTitle("Aplicar filtro"));
+        panel.add(new JLabel(""));
 
         panel.add(new JLabel("Filtrar por:"));
         panel.add(comboTipo);
@@ -51,6 +54,8 @@ public class FiltroAnimeDialog extends JDialog {
 
         JButton btnCancelar = new JButton("Cancelar");
         JButton btnAplicar = new JButton("Aplicar");
+        UiTheme.styleSecondaryButton(btnCancelar);
+        UiTheme.stylePrimaryButton(btnAplicar);
 
         btnCancelar.addActionListener(e -> {
             resultado = null;
@@ -70,12 +75,17 @@ public class FiltroAnimeDialog extends JDialog {
         });
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelBotones.setOpaque(false);
         panelBotones.add(btnCancelar);
         panelBotones.add(btnAplicar);
 
-        setLayout(new BorderLayout(10, 10));
-        add(panel, BorderLayout.CENTER);
-        add(panelBotones, BorderLayout.SOUTH);
+        JPanel container = new JPanel(new BorderLayout(0, 10));
+        container.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
+        container.setBackground(UiTheme.BG_APP);
+        container.add(panel, BorderLayout.CENTER);
+        container.add(panelBotones, BorderLayout.SOUTH);
+
+        setContentPane(container);
     }
 
     private void actualizarHabilitados() {

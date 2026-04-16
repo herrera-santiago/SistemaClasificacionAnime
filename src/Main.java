@@ -9,6 +9,7 @@ import service.IAnimeService;
 import service.IListaService;
 import service.ListaServiceImpl;
 import ui.MainWindow;
+import ui.UiTheme;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,6 +22,7 @@ public class Main {
         IListaService listaService = new ListaServiceImpl(listaRepo);
 
         SwingUtilities.invokeLater(() -> {
+            UiTheme.initializeGlobalTheme();
             MainWindow mainWindow = new MainWindow(animeService, listaService);
             mainWindow.mostrar();
         });

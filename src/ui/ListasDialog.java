@@ -27,8 +27,8 @@ public class ListasDialog extends JDialog {
         this.animeService = animeService;
         this.animeSeleccionado = animeSeleccionado;
 
-        setTitle("Gestión de Listas");
-        setSize(500, 350);
+        setTitle("📁 Gestión de Listas · Boca Theme");
+        setSize(620, 430);
         setLocationRelativeTo(owner);
 
         initUI();
@@ -39,10 +39,12 @@ public class ListasDialog extends JDialog {
         modelListas = new DefaultListModel<>();
         listListas = new JList<>(modelListas);
         listListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listListas.setFixedCellHeight(30);
 
 
         listListas.setCellRenderer((list, value, index, isSelected, cellHasFocus) -> {
-            JLabel lbl = new JLabel(value != null ? value.getNombre() : "");
+            JLabel lbl = new JLabel(value != null ? "📁 " + value.getNombre() : "");
+            lbl.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
             if (isSelected) {
                 lbl.setOpaque(true);
                 lbl.setBackground(list.getSelectionBackground());
@@ -56,6 +58,11 @@ public class ListasDialog extends JDialog {
         JButton btnVerListasDelAnime = new JButton("Ver listas del animé");
         JButton btnCerrar = new JButton("Cerrar");
 
+        UiTheme.stylePrimaryButton(btnCrear);
+        UiTheme.styleSecondaryButton(btnAgregarAnime);
+        UiTheme.styleSecondaryButton(btnVerListasDelAnime);
+        UiTheme.styleSecondaryButton(btnCerrar);
+
         btnCrear.addActionListener(e -> crearLista());
         btnAgregarAnime.addActionListener(e -> agregarAnimeALista());
         btnVerListasDelAnime.addActionListener(e -> verListasDelAnime());
@@ -66,20 +73,29 @@ public class ListasDialog extends JDialog {
         btnVerListasDelAnime.setEnabled(animeSeleccionado != null);
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelBotones.setOpaque(false);
         panelBotones.add(btnCrear);
         panelBotones.add(btnAgregarAnime);
         panelBotones.add(btnVerListasDelAnime);
         panelBotones.add(btnCerrar);
 
-        setLayout(new BorderLayout(10, 10));
-        add(new JScrollPane(listListas), BorderLayout.CENTER);
-        add(panelBotones, BorderLayout.SOUTH);
+        JPanel center = UiTheme.cardLayout(new BorderLayout(0, 10));
+        center.add(UiTheme.createCardTitle("Listas disponibles"), BorderLayout.NORTH);
+        center.add(new JScrollPane(listListas), BorderLayout.CENTER);
+
+        JPanel container = new JPanel(new BorderLayout(0, 10));
+        container.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
+        container.setBackground(UiTheme.BG_APP);
+        container.add(center, BorderLayout.CENTER);
+        container.add(panelBotones, BorderLayout.SOUTH);
+
+        setContentPane(container);
     }
 
     private void refrescarListas() {
         try {
             modelListas.clear();
-            List<Lista> listas = listaService.listarListas(); // <-- tu amigo tiene que devolver listas reales
+            List<Lista> listas = listaService.listarListas();
             for (Lista l : listas) modelListas.addElement(l);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error al cargar listas: " + ex.getMessage(),
@@ -89,7 +105,7 @@ public class ListasDialog extends JDialog {
 
     private void crearLista() {
         String nombre = JOptionPane.showInputDialog(this, "Nombre de la lista:");
-        if (nombre == null) return; // canceló
+        if (nombre == null) return;
         nombre = nombre.trim();
         if (nombre.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -134,7 +150,7 @@ public class ListasDialog extends JDialog {
         if (animeSeleccionado == null) return;
 
         try {
-            List<Lista> listas = listaService.obtenerListasQueContienenAnime(animeSeleccionado.getId()); // <-- tu amigo debe implementarlo
+            List<Lista> listas = listaService.obtenerListasQueContienenAnime(animeSeleccionado.getId());
             if (listas.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "El animé no está en ninguna lista.", "Info", JOptionPane.INFORMATION_MESSAGE);
                 return;

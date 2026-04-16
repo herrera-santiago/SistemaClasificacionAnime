@@ -14,8 +14,8 @@ public class RecomendarDialog extends JDialog {
 
     public RecomendarDialog(Frame owner) {
         super(owner, true);
-        setTitle("Recomendar animés");
-        setSize(360, 220);
+        setTitle("★ Recomendador Xeneize");
+        setSize(440, 280);
         setLocationRelativeTo(owner);
         init();
     }
@@ -26,7 +26,10 @@ public class RecomendarDialog extends JDialog {
         comboGenero = new JComboBox<>(Generos.values());
         spinnerCantidad = new JSpinner(new SpinnerNumberModel(3, 1, 50, 1));
 
-        JPanel panel = new JPanel(new GridLayout(0, 2, 8, 8));
+        JPanel panel = UiTheme.cardLayout(new GridLayout(0, 2, 10, 10));
+        panel.add(UiTheme.createCardTitle("Elegir recomendación"));
+        panel.add(new JLabel(""));
+
         panel.add(new JLabel("Tipo:"));
         panel.add(comboTipo);
 
@@ -41,6 +44,8 @@ public class RecomendarDialog extends JDialog {
 
         JButton btnCancelar = new JButton("Cancelar");
         JButton btnOk = new JButton("Recomendar");
+        UiTheme.styleSecondaryButton(btnCancelar);
+        UiTheme.stylePrimaryButton(btnOk);
 
         btnCancelar.addActionListener(e -> { resultado = null; dispose(); });
         btnOk.addActionListener(e -> {
@@ -57,12 +62,17 @@ public class RecomendarDialog extends JDialog {
         });
 
         JPanel botones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        botones.setOpaque(false);
         botones.add(btnCancelar);
         botones.add(btnOk);
 
-        setLayout(new BorderLayout(10, 10));
-        add(panel, BorderLayout.CENTER);
-        add(botones, BorderLayout.SOUTH);
+        JPanel container = new JPanel(new BorderLayout(0, 10));
+        container.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
+        container.setBackground(UiTheme.BG_APP);
+        container.add(panel, BorderLayout.CENTER);
+        container.add(botones, BorderLayout.SOUTH);
+
+        setContentPane(container);
     }
 
     private void actualizarHabilitados() {

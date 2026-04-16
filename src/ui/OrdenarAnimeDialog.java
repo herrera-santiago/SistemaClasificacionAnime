@@ -13,8 +13,8 @@ public class OrdenarAnimeDialog extends JDialog {
 
     public OrdenarAnimeDialog(Frame owner) {
         super(owner, true);
-        setTitle("Ordenar animés");
-        setSize(340, 200);
+        setTitle("⇅ Orden xeneize de animés");
+        setSize(420, 250);
         setLocationRelativeTo(owner);
         inicializar();
     }
@@ -23,7 +23,10 @@ public class OrdenarAnimeDialog extends JDialog {
         comboCampo = new JComboBox<>(new String[]{"Título", "Año", "Calificación", "Género"});
         comboOrden = new JComboBox<>(Ordenamientos.values());
 
-        JPanel panel = new JPanel(new GridLayout(0, 2, 8, 8));
+        JPanel panel = UiTheme.cardLayout(new GridLayout(0, 2, 10, 10));
+        panel.add(UiTheme.createCardTitle("Configurar orden"));
+        panel.add(new JLabel(""));
+
         panel.add(new JLabel("Ordenar por:"));
         panel.add(comboCampo);
 
@@ -32,6 +35,8 @@ public class OrdenarAnimeDialog extends JDialog {
 
         JButton btnCancelar = new JButton("Cancelar");
         JButton btnAplicar = new JButton("Aplicar");
+        UiTheme.styleSecondaryButton(btnCancelar);
+        UiTheme.stylePrimaryButton(btnAplicar);
 
         btnCancelar.addActionListener(e -> { resultado = null; dispose(); });
         btnAplicar.addActionListener(e -> {
@@ -43,12 +48,17 @@ public class OrdenarAnimeDialog extends JDialog {
         });
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelBotones.setOpaque(false);
         panelBotones.add(btnCancelar);
         panelBotones.add(btnAplicar);
 
-        setLayout(new BorderLayout(10, 10));
-        add(panel, BorderLayout.CENTER);
-        add(panelBotones, BorderLayout.SOUTH);
+        JPanel container = new JPanel(new BorderLayout(0, 10));
+        container.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
+        container.setBackground(UiTheme.BG_APP);
+        container.add(panel, BorderLayout.CENTER);
+        container.add(panelBotones, BorderLayout.SOUTH);
+
+        setContentPane(container);
     }
 
     public OrdenarDTO mostrar() {
