@@ -22,17 +22,16 @@ public class AnimeActionsPanel extends JPanel {
 
         JPanel card = UiTheme.cardLayout(new BorderLayout(0, 12));
 
-        JLabel titulo = new JLabel("Acciones rápidas");
-        titulo.setFont(titulo.getFont().deriveFont(Font.BOLD, 18f));
+        JLabel titulo = UiTheme.createCardTitle("Acciones xeneizes");
         card.add(titulo, BorderLayout.NORTH);
 
         JPanel botones = new JPanel(new GridLayout(0, 1, 0, 8));
         botones.setOpaque(false);
 
-        btnNuevo = new JButton("＋ Nuevo animé");
+        btnNuevo = new JButton("⚽ Nuevo animé");
         btnEditar = new JButton("✎ Editar seleccionado");
         btnEliminar = new JButton("🗑 Eliminar seleccionado");
-        btnFiltrar = new JButton("🔎 Aplicar filtro");
+        btnFiltrar = new JButton("🔎 Filtrar plantel");
         btnLimpiarFiltro = new JButton("⟲ Limpiar filtros");
         btnOrdenar = new JButton("⇅ Ordenar listado");
         btnRecomendar = new JButton("★ Recomendar");

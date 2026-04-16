@@ -17,7 +17,7 @@ public class FiltroAnimeDialog extends JDialog {
 
     public FiltroAnimeDialog(Frame owner) {
         super(owner, true);
-        setTitle("Filtrar Animés");
+        setTitle("🔎 Filtro Xeneize de Animés");
         setSize(420, 300);
         setLocationRelativeTo(owner);
 
@@ -32,6 +32,9 @@ public class FiltroAnimeDialog extends JDialog {
         spinnerCalificacion = new JSpinner(new SpinnerNumberModel(1, 1, 5, 1));
 
         JPanel panel = UiTheme.cardLayout(new GridLayout(0, 2, 10, 10));
+
+        panel.add(UiTheme.createCardTitle("Aplicar filtro"));
+        panel.add(new JLabel(""));
 
         panel.add(new JLabel("Filtrar por:"));
         panel.add(comboTipo);

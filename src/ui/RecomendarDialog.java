@@ -14,7 +14,7 @@ public class RecomendarDialog extends JDialog {
 
     public RecomendarDialog(Frame owner) {
         super(owner, true);
-        setTitle("Recomendar animés");
+        setTitle("★ Recomendador Xeneize");
         setSize(440, 280);
         setLocationRelativeTo(owner);
         init();
@@ -27,6 +27,9 @@ public class RecomendarDialog extends JDialog {
         spinnerCantidad = new JSpinner(new SpinnerNumberModel(3, 1, 50, 1));
 
         JPanel panel = UiTheme.cardLayout(new GridLayout(0, 2, 10, 10));
+        panel.add(UiTheme.createCardTitle("Elegir recomendación"));
+        panel.add(new JLabel(""));
+
         panel.add(new JLabel("Tipo:"));
         panel.add(comboTipo);
 

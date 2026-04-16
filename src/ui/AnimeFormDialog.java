@@ -23,7 +23,7 @@ public class AnimeFormDialog extends JDialog {
 
     public AnimeFormDialog(Frame owner) {
         super(owner, true);
-        setTitle("Formulario Animé");
+        setTitle("⚽ Ficha de Animé · Boca Theme");
         setSize(560, 520);
         setLocationRelativeTo(owner);
 
@@ -45,12 +45,21 @@ public class AnimeFormDialog extends JDialog {
         spinnerCalificacion = new JSpinner(new SpinnerNumberModel(1, 1, 5, 1));
 
         JPanel panel = UiTheme.cardLayout(new GridBagLayout());
+        JLabel formTitle = UiTheme.createCardTitle("Completar ficha del animé");
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(6, 6, 6, 6);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
 
-        int row = 0;
+        GridBagConstraints titleGbc = new GridBagConstraints();
+        titleGbc.gridx = 0;
+        titleGbc.gridy = 0;
+        titleGbc.gridwidth = 2;
+        titleGbc.anchor = GridBagConstraints.WEST;
+        titleGbc.insets = new Insets(0, 0, 10, 0);
+        panel.add(formTitle, titleGbc);
+
+        int row = 1;
         agregarFila(panel, gbc, row++, "Título:", txtTitulo);
         agregarFila(panel, gbc, row++, "Año:", txtAnio);
         agregarFila(panel, gbc, row++, "Capítulos:", txtCapitulos);

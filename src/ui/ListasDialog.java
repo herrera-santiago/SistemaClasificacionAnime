@@ -27,7 +27,7 @@ public class ListasDialog extends JDialog {
         this.animeService = animeService;
         this.animeSeleccionado = animeSeleccionado;
 
-        setTitle("Gestión de Listas");
+        setTitle("📁 Gestión de Listas · Boca Theme");
         setSize(620, 430);
         setLocationRelativeTo(owner);
 
@@ -80,7 +80,7 @@ public class ListasDialog extends JDialog {
         panelBotones.add(btnCerrar);
 
         JPanel center = UiTheme.cardLayout(new BorderLayout(0, 10));
-        center.add(new JLabel("Listas disponibles"), BorderLayout.NORTH);
+        center.add(UiTheme.createCardTitle("Listas disponibles"), BorderLayout.NORTH);
         center.add(new JScrollPane(listListas), BorderLayout.CENTER);
 
         JPanel container = new JPanel(new BorderLayout(0, 10));

@@ -13,7 +13,7 @@ public class OrdenarAnimeDialog extends JDialog {
 
     public OrdenarAnimeDialog(Frame owner) {
         super(owner, true);
-        setTitle("Ordenar animés");
+        setTitle("⇅ Orden xeneize de animés");
         setSize(420, 250);
         setLocationRelativeTo(owner);
         inicializar();
@@ -24,6 +24,9 @@ public class OrdenarAnimeDialog extends JDialog {
         comboOrden = new JComboBox<>(Ordenamientos.values());
 
         JPanel panel = UiTheme.cardLayout(new GridLayout(0, 2, 10, 10));
+        panel.add(UiTheme.createCardTitle("Configurar orden"));
+        panel.add(new JLabel(""));
+
         panel.add(new JLabel("Ordenar por:"));
         panel.add(comboCampo);
 

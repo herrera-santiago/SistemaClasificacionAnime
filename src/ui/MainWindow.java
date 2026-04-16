@@ -23,7 +23,7 @@ public class MainWindow extends JFrame {
     }
 
     private void inicializar() {
-        setTitle("Clasificador de Animé · Pro UI");
+        setTitle("Clasificador de Animé · Edición Xeneize");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1240, 760);
         setMinimumSize(new Dimension(980, 620));
@@ -49,22 +49,30 @@ public class MainWindow extends JFrame {
     private JComponent crearHeader() {
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(true);
-        header.setBackground(UiTheme.BG_CARD);
-        header.setBorder(UiTheme.cardBorder());
+        header.setBackground(UiTheme.BOCA_AZUL_OSCURO);
+        header.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(UiTheme.BOCA_AZUL),
+                BorderFactory.createEmptyBorder(16, 16, 16, 16)
+        ));
 
-        JLabel titulo = new JLabel("Panel de Gestión de Animé");
+        JLabel titulo = new JLabel("💙💛 Gestión de Animé · Theme Boca Juniors");
         titulo.setFont(((Font) UIManager.get("App.titleFont")));
-        titulo.setForeground(UiTheme.TEXT_MAIN);
+        titulo.setForeground(UiTheme.BOCA_ORO);
 
-        JLabel subtitulo = new JLabel("Administra, filtra, ordena y recomienda con una experiencia moderna.");
-        subtitulo.setForeground(UiTheme.TEXT_MUTED);
+        JLabel subtitulo = new JLabel("Dale Bo, administra, filtra y recomienda con estilo xeneize.");
+        subtitulo.setForeground(new Color(229, 237, 255));
 
         JPanel textWrap = new JPanel(new GridLayout(0, 1, 0, 6));
         textWrap.setOpaque(false);
         textWrap.add(titulo);
         textWrap.add(subtitulo);
 
-        header.add(textWrap, BorderLayout.WEST);
+        JPanel franjaOro = new JPanel();
+        franjaOro.setBackground(UiTheme.BOCA_ORO);
+        franjaOro.setPreferredSize(new Dimension(8, 0));
+
+        header.add(textWrap, BorderLayout.CENTER);
+        header.add(franjaOro, BorderLayout.EAST);
         return header;
     }
 

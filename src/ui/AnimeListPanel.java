@@ -23,13 +23,13 @@ public class AnimeListPanel extends JPanel {
         tabla.setAutoCreateRowSorter(true);
         tabla.setRowHeight(32);
         tabla.setShowHorizontalLines(true);
-        tabla.setGridColor(UiTheme.BORDER);
-        tabla.setSelectionBackground(new Color(221, 235, 255));
-        tabla.setSelectionForeground(UiTheme.TEXT_MAIN);
+        tabla.setGridColor(new Color(210, 223, 255));
+        tabla.setSelectionBackground(UiTheme.BOCA_ORO);
+        tabla.setSelectionForeground(UiTheme.BOCA_AZUL_OSCURO);
 
         JTableHeader header = tabla.getTableHeader();
-        header.setBackground(new Color(237, 242, 255));
-        header.setForeground(UiTheme.TEXT_MAIN);
+        header.setBackground(UiTheme.BOCA_AZUL);
+        header.setForeground(UiTheme.BOCA_ORO);
         header.setPreferredSize(new Dimension(0, 36));
 
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
@@ -38,7 +38,7 @@ public class AnimeListPanel extends JPanel {
                                                            boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 if (!isSelected) {
-                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(248, 250, 255));
+                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(243, 248, 255));
                 }
                 setBorder(BorderFactory.createEmptyBorder(0, 8, 0, 8));
                 return c;
@@ -53,8 +53,7 @@ public class AnimeListPanel extends JPanel {
         scroll.setBorder(BorderFactory.createEmptyBorder());
 
         JPanel card = UiTheme.cardLayout(new BorderLayout(0, 10));
-        JLabel titulo = new JLabel("Listado de animés");
-        titulo.setFont(titulo.getFont().deriveFont(Font.BOLD, 18f));
+        JLabel titulo = UiTheme.createCardTitle("Plantel de animés");
         card.add(titulo, BorderLayout.NORTH);
         card.add(scroll, BorderLayout.CENTER);
 
