@@ -17,28 +17,51 @@ public class AnimeActionsPanel extends JPanel {
 
 
     public AnimeActionsPanel() {
-        btnNuevo = new JButton("Nuevo");
-        btnEditar = new JButton("Editar");
-        btnLimpiarFiltro = new JButton("Limpiar Filtros");
-        btnEliminar = new JButton("Eliminar");
-        btnFiltrar = new JButton("Filtrar");
-        btnListas = new JButton("Listas");
-        btnOrdenar = new JButton("Ordenar");
-        btnCantidadPorEstado = new JButton("Cantidad por estado");
-        btnRecomendar = new JButton("Recomedar");
+        setLayout(new BorderLayout());
+        setOpaque(false);
 
+        JPanel card = UiTheme.cardLayout(new BorderLayout(0, 12));
 
-        setLayout(new FlowLayout(FlowLayout.RIGHT));
-        add(btnNuevo);
-        add(btnEditar);
-        add(btnLimpiarFiltro);
-        add(btnEliminar);
-        add(btnFiltrar);
-        add(btnListas);
-        add(btnOrdenar);
-        add(btnCantidadPorEstado);
-        add(btnRecomendar);
+        JLabel titulo = new JLabel("Acciones rápidas");
+        titulo.setFont(titulo.getFont().deriveFont(Font.BOLD, 18f));
+        card.add(titulo, BorderLayout.NORTH);
 
+        JPanel botones = new JPanel(new GridLayout(0, 1, 0, 8));
+        botones.setOpaque(false);
+
+        btnNuevo = new JButton("＋ Nuevo animé");
+        btnEditar = new JButton("✎ Editar seleccionado");
+        btnEliminar = new JButton("🗑 Eliminar seleccionado");
+        btnFiltrar = new JButton("🔎 Aplicar filtro");
+        btnLimpiarFiltro = new JButton("⟲ Limpiar filtros");
+        btnOrdenar = new JButton("⇅ Ordenar listado");
+        btnRecomendar = new JButton("★ Recomendar");
+        btnListas = new JButton("☰ Gestionar listas");
+        btnCantidadPorEstado = new JButton("📊 Cantidad por estado");
+
+        UiTheme.stylePrimaryButton(btnNuevo);
+        UiTheme.styleSecondaryButton(btnEditar);
+        UiTheme.styleDangerButton(btnEliminar);
+        UiTheme.styleSecondaryButton(btnFiltrar);
+        UiTheme.styleSecondaryButton(btnLimpiarFiltro);
+        UiTheme.styleSecondaryButton(btnOrdenar);
+        UiTheme.styleSecondaryButton(btnRecomendar);
+        UiTheme.styleSecondaryButton(btnListas);
+        UiTheme.styleSecondaryButton(btnCantidadPorEstado);
+
+        botones.add(btnNuevo);
+        botones.add(btnEditar);
+        botones.add(btnEliminar);
+        botones.add(new JSeparator());
+        botones.add(btnFiltrar);
+        botones.add(btnLimpiarFiltro);
+        botones.add(btnOrdenar);
+        botones.add(btnRecomendar);
+        botones.add(btnListas);
+        botones.add(btnCantidadPorEstado);
+
+        card.add(botones, BorderLayout.CENTER);
+        add(card, BorderLayout.NORTH);
     }
 
     public void registrarListeners(MainWindowController controlador) {

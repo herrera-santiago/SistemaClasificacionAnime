@@ -24,7 +24,7 @@ public class AnimeFormDialog extends JDialog {
     public AnimeFormDialog(Frame owner) {
         super(owner, true);
         setTitle("Formulario Animé");
-        setSize(420, 420);
+        setSize(560, 520);
         setLocationRelativeTo(owner);
 
         inicializarComponentes();
@@ -40,35 +40,39 @@ public class AnimeFormDialog extends JDialog {
 
         listGeneros = new JList<>(Generos.values());
         listGeneros.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        listGeneros.setVisibleRowCount(6);
 
         spinnerCalificacion = new JSpinner(new SpinnerNumberModel(1, 1, 5, 1));
 
-        JPanel panel = new JPanel(new GridLayout(0, 2, 8, 8));
+        JPanel panel = UiTheme.cardLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(6, 6, 6, 6);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1;
 
-        panel.add(new JLabel("Título:"));
-        panel.add(txtTitulo);
+        int row = 0;
+        agregarFila(panel, gbc, row++, "Título:", txtTitulo);
+        agregarFila(panel, gbc, row++, "Año:", txtAnio);
+        agregarFila(panel, gbc, row++, "Capítulos:", txtCapitulos);
+        agregarFila(panel, gbc, row++, "Estudio:", comboEstudio);
+        agregarFila(panel, gbc, row++, "Estado:", comboEstado);
+        agregarFila(panel, gbc, row++, "Calificación:", spinnerCalificacion);
 
-        panel.add(new JLabel("Año:"));
-        panel.add(txtAnio);
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        gbc.weightx = 0;
+        panel.add(new JLabel("Géneros:"), gbc);
 
-        panel.add(new JLabel("Capítulos:"));
-        panel.add(txtCapitulos);
+        gbc.gridx = 1;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 1;
+        panel.add(new JScrollPane(listGeneros), gbc);
 
-        panel.add(new JLabel("Estudio:"));
-        panel.add(comboEstudio);
-
-        panel.add(new JLabel("Estado:"));
-        panel.add(comboEstado);
-
-        panel.add(new JLabel("Géneros:"));
-        panel.add(new JScrollPane(listGeneros));
-
-        panel.add(new JLabel("Calificación:"));
-        panel.add(spinnerCalificacion);
-
-
-        JButton btnAceptar = new JButton("Aceptar");
+        JButton btnAceptar = new JButton("Guardar");
         JButton btnCancelar = new JButton("Cancelar");
+        UiTheme.stylePrimaryButton(btnAceptar);
+        UiTheme.styleSecondaryButton(btnCancelar);
 
         btnAceptar.addActionListener(e -> {
             try {
@@ -87,12 +91,30 @@ public class AnimeFormDialog extends JDialog {
         });
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelBotones.setOpaque(false);
         panelBotones.add(btnCancelar);
         panelBotones.add(btnAceptar);
 
-        setLayout(new BorderLayout(10, 10));
-        add(panel, BorderLayout.CENTER);
-        add(panelBotones, BorderLayout.SOUTH);
+        JPanel container = new JPanel(new BorderLayout(0, 10));
+        container.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
+        container.setBackground(UiTheme.BG_APP);
+        container.add(panel, BorderLayout.CENTER);
+        container.add(panelBotones, BorderLayout.SOUTH);
+
+        setContentPane(container);
+    }
+
+    private void agregarFila(JPanel panel, GridBagConstraints gbc, int row, String etiqueta, JComponent componente) {
+        gbc.gridy = row;
+        gbc.gridx = 0;
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(new JLabel(etiqueta), gbc);
+
+        gbc.gridx = 1;
+        gbc.weightx = 1;
+        panel.add(componente, gbc);
     }
 
     public AnimeFormDTO mostrarParaCrear() {
